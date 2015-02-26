@@ -18,8 +18,10 @@ if(isset($_POST['log_in'])){
     
     //checking for query result's no of row is equal to one
     if(mysqli_num_rows($check_username_res) == 1){
+      $row = mysqli_fetch_array($check_username_res);
+      $user_name = $row['user_email'];
       $_SESSION['user_name'] = $user_name;
-        header("location: profile.php");
+      header("location: profile.php");
     }
     else{
       $email_err = "Invalid user name/password combination.<br>";
@@ -44,6 +46,7 @@ if(isset($_POST['log_in'])){
 include 'header.php';
 ?>
 <div class="container">
+  
   <form class="form-horizontal" action="#" method="post">
     <fieldset>
       

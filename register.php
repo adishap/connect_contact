@@ -13,7 +13,7 @@ if(isset($_POST['register'])){
 	$middle_name = $_POST['middle_name'];
 	$last_name = $_POST['last_name'];
 	$gender = $_POST['sex'];
-	$dob = $_POST['dob'];
+	$dob = date("Y-m-d",strtotime($_POST['dob']));
 	$mobile_no = $_POST['mobile_no'];
 	$user_email = $_POST['email_id'];
 	$city = $_POST['city'];	
@@ -30,12 +30,23 @@ if(isset($_POST['register'])){
 			$query_num_rows = mysqli_num_rows($check_email_result);
 			if($query_num_rows == 0){//if no of rows is 0 then register the user
 				
-				$insert_query = "INSERT INTO `user_master`(`user_email`, `password`, `first_name`, `middle_name`, `last_name`, `gender`, `date_of_birth`, `per_country`, `per_country_code`, `per_state`, `per_city`, `per_starting_address`, `per_pincode`, `loc_country`, `loc_country_code`, `loc_state`, `loc_pincode`, `loc_city`, `loc_starting_address`, `mobile_no`, `martial_status`, `date_of_anniversary`, `image_path`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6],[value-7],[value-8],[value-9],[value-10],[value-11],[value-12],[value-13],[value-14],[value-15],[value-16],[value-17],[value-18],[value-19],[value-20],[value-21],[value-22],[value-23])";
+				$insert_query = "INSERT INTO `user_master`(`user_email`, `password`, `first_name`, `middle_name`, `last_name`, `gender`, `date_of_birth`, `loc_city`, `mobile_no`) VALUES ('".$user_email."','".$password."','".$first_name."','".$middle_name."','".$last_name."','".$gender."','".$dob."','".$city."','".$mobile_no."')";
+				if($insert_result = mysqli_query($con , $insert_query)){
+					//if insert query executed echo successful
+					echo "<script>alert('User registered successfully.')</script>";
+				} 
+				else{
+					$db_error = "Oops!! Error occured in inserting in database.";
+				}
 
 			}
 			else{
 				$email_err = "Email id or mobile number already exists.";
 			}
+		}
+		else{
+			//if check email query fails
+			$db_error = "Oops!! Error in checking entries in database.";
 		}
 	}
 	else{
@@ -72,6 +83,11 @@ include 'header.php';
   <form action="#" method="post">
 	<!-- Form Name -->
       <legend>Register</legend>
+      <?php
+	if(trim($db_error)!= ''){
+		echo $db_error;
+	}
+	?>
 
 	<div class="row">
 	<!--Form input for name-->
