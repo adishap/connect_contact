@@ -1,5 +1,6 @@
 <?php
-
+session_start();
+ob_start();
 //if user is not logged in
 if(!isset($_SESSION['user_name']) || (trim($_SESSION['user_name']) == '')) {
  	header('location: log_in.php');

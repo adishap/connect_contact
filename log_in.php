@@ -84,6 +84,9 @@ include 'header.php';
       <input type="hidden" name="log_in" value="log_in">
       <button type="submit" class="btn btn-primary">Log In</button><br><br>
     </fieldset>
+  	Not Registered Yet?<br>
+	<a href="register.php">Register</a> today.
+	
   </form>
 </div>
 
