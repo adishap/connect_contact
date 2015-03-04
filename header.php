@@ -31,7 +31,8 @@ else{
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Contacts<span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
           <li><a href="search.php">Search Contact</a></li>
-          <li><a href="wish.php">Wish Birthday</a></li>  
+          <li><a href="wish_birthday.php">Wish Birthday</a></li>  
+          <li><a href="wish_anniversary.php">Wish Anniversary</a></li>  
           </ul>
         </li>
         <li><a href="log_out.php">Log Out</a></li>

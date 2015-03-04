@@ -112,10 +112,11 @@ $user_email = $_SESSION['user_name'];
 
     if(isset($_POST['upload_image'])){
 
-      $target_dir = "images/profile_pictures/";
+      $target_dir = "images/";
       $uploadOk = 1;
       $imageFileType = pathinfo($_FILES["fileToUpload"]["name"],PATHINFO_EXTENSION);
-      $target_file = $target_dir.$user_email.".".$imageFileType;
+      //$target_file = $target_dir.$user_email.".".$imageFileType;
+      $target_file = $target_dir."red.".$imageFileType;
     
       //checks file size
       $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
@@ -145,7 +146,7 @@ $user_email = $_SESSION['user_name'];
         echo "<script>alert('Sorry, only JPG, JPEG, PNG & GIF files are allowed.')</script>";
         $uploadOk = 0;
       }
-
+      echo $target_file;
       // Check if $uploadOk is set to 0 by an error
       if ($uploadOk == 0) {
         echo "<script>alert('Sorry, your file was not uploaded.')</script>";

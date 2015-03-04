@@ -6,6 +6,8 @@
 <body>
 <?php
 include 'header.php';
+session_start();
+ob_start();
 ?>
 
 <script src="js/jquery.js"></script>
