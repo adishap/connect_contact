@@ -71,6 +71,31 @@ $user_email = $_SESSION['user_name'];
     <input type="hidden" name="update_name" value="update_name">
     <button type="submit" class="btn btn-primary" >Update Name</button><br><br>
     </form>
+
+<!--Update Social Links-->
+    <form action="#" method="post">
+    <br>
+    <legend>Update Social links</legend>
+    
+    <!--Input forlink to personal website-->
+    <input name="personal_website" type="text" placeholder="Personal Website Link"/><br><br>
+
+   <!--Input for link to linkedin Profile-->
+   <input name="linkedin" type="text" placeholder="LinkedIn Profile Link" required/><br><br>
+   
+   <!--Input for link to twitter Profile-->
+   <input name="twitter" type="text" placeholder="Twitter Profile Link" required/><br><br>
+    
+   <!--Input for link to facebook Profile-->
+   <input name="facebook" type="text" placeholder="Facebook Profile Link" required/><br><br>
+  
+    <!--Submit Button-->
+    <input type="hidden" name="update_web_links" value="update_web_links">
+    <button type="submit" class="btn btn-primary" >Update Links</button><br><br>
+    </form>
+
+
+<!--Display Picture form-->
     
     <form action="#" method="post" enctype="multipart/form-data">
     
@@ -107,6 +132,45 @@ $user_email = $_SESSION['user_name'];
           echo 'Please fill middle name or last name.';
         }
       }
+
+      //backend for updating web_links
+      if(isset($_POST['update_web_links'])){
+          $personal_website = $_POST['personal_website'];
+          $linkedin = $_POST['linkedin']; 
+          $twitter = $_POST['twitter'];
+          $facebook = $_POST['facebook'];
+
+          #check first if weblinks exists or not if yes then update query is executed 
+          #else insert query is executed
+
+          $check_weblink = "SELECT * FROM `user_social_links` WHERE `user_email`  ='".$user_email."'";
+          if($run_check_weblink = mysqli_query($con,$check_weblink)){
+            if(mysqli_num_rows($run_check_weblink) > 0){//if social links exists
+              $update_weblinks = "UPDATE `user_social_links` SET `twitter_link`='".$twitter."',`linkedin_link`='".$linkedin."',`facebook_link`='".$facebook."',`personal_website`='".$personal_website."' WHERE `user_email`  ='".$user_email."'";
+              if($run_update_weblinks = mysqli_query($con,$update_weblinks)){
+                echo "<script>alert('Updation Successful.')</script>";  
+              }
+              else{
+                echo "<script>alert('Error in updating your social links.')</script>";
+              }
+            }
+            else{//if social links doesn't exists insert query is used
+              $insert_weblinks = "INSERT INTO `user_social_links`(`user_email`,`twitter_link`, `linkedin_link`, `facebook_link`, `personal_website`) VALUES ('".$user_email."','".$twitter."','".$linkedin."','".$facebook."','".$personal_website."')";
+              if($run_insert_weblinks = mysqli_query($con,$insert_weblinks)){
+                 echo "<script>alert('Updation Successful')</script>";
+              }
+              else{
+                 echo "<script>alert('Error in inserting your social links.')</script>";
+              }
+            }
+          }
+          else{
+            echo "<script>alert('Error in checking your social links.')</script>";
+          }
+          
+        }
+        
+      
 
     //backend for updating image
 
@@ -194,7 +258,7 @@ $user_email = $_SESSION['user_name'];
     <!--Input for date of anniversary-->
   <label>Date of Anniversary</label><br>
     <input type="text" name="date_of_anniversary" class="datepicker">
-    
+    <br>
   <br>
     <!-- Button -->
     <input type="hidden" name="update_martial_status" value="update_martial_status">
@@ -451,7 +515,7 @@ $user_email = $_SESSION['user_name'];
         while($row = mysqli_fetch_array($result)) {
           echo $row['user_email'];
           //if exists then we will apply update query
-          $professional_update_query = "UPDATE `alum_professional_info` SET `organisation_name`='".$org_name."',`job_title`='".$job_title."', `country`='".$org_country."',`state`='".$org_state."',`city`='".$org_city."',`starting_address`='".$org_starting_address."',`office_email_id`='".$org_email."',`self_employed`='".$business_owner."' WHERE `user_email` ='".$user_email."'";
+          $professional_update_query = "UPDATE `alum_professional_info` SET `organisation_name`='".$org_name."',`job_title`='".$job_title."', `country`='".$org_country."',`state`='".$org_state."',`city`='".$org_city."',`starting_address`='".$org_starting_address."',`office_email_id`='".$org_email."',`self_employed`=$business_owner WHERE `user_email` ='".$user_email."'";
           if($update_result = mysqli_query($con , $professional_update_query)){
             echo "<script>alert('Updation Successful.')</script>";
           }
